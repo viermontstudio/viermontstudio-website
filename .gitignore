@@ -1,0 +1,16 @@
+# Copias de seguridad y versiones
+versions/
+*.zip
+*.tar.gz
+
+# Archivos de investigación / diseño
+research/artwork/
+
+# Sistema y configuración local
+.env
+.DS_Store
+Thumbs.db
+
+# Compilación y dependencias web (si usas npm)
+node_modules/
+dist/
