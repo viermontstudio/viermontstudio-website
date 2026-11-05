@@ -33,36 +33,30 @@ La documentación completa puede consultarse en la carpeta `/docs` y la evoluci�
 
 ## Estructura del repositorio
 ```text
-viermont-studio/
+viermontstudio-website/
 │
 ├── README.md
+├── index.html
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
 │
-├── versions/
-│   ├── v1_fundacion.zip
-│   ├── v2_experiencia_interactiva.zip
-│   ├── v3_convergencia.zip
-│   ├── v4_fusion.zip
-│   ├── v5_identidad.zip
-│   └── v6_consolidacion.zip
+├── src/                     # Código fuente (TypeScript, componentes, estilos, CLI)
+├── public/                  # Galería de imágenes WebP optimizadas y recursos estáticos
 │
-├── docs/
-│   ├── readme-v6-consolidacion.md
-│   ├── historia-presente-futuro.md
-│   ├── memoria_tecnica_completa_viermont_studio.md
-│   ├── master-context.md
-│   ├── project-history.md
-│   └── changelog.md
-│
-└── research/
-    └── artwork/
+├── docs/                    # Documentación técnica e historial del proyecto
+├── versions/                # Archivos .zip históricos (ignorados en .gitignore)
+└── research/                # Material de investigación y archivos máster (ignorados en .gitignore)
 ```
 
-### Descripción
-- **`versions/`** → Evolución histórica comprimida de Viermont Studio (filtrada en `.gitignore`).
-- **`docs/`** → Documentación técnica, auditorías, memorias y estrategia de cada versión.
-- **`research/`** → Material de apoyo y documentación relacionada con el portfolio artístico.
+### Descripción de carpetas
+- **`src/`** → Lógica de la aplicación, interfaz Bento, terminal interactiva y estilos.
+- **`public/`** → Galería optimizada en formato WebP para la experiencia web pública.
+- **`docs/`** → Memorias técnicas, auditorías, changelog y estrategia del sitio.
+- **`versions/`** → Copias `.zip` de seguridad locales (excluidas del repositorio).
+- **`research/`** → Archivos máster en alta resolución y material de investigación (excluidos del repositorio).
 
-*El contenido de `research/artwork/` y la carpeta `versions/` se mantienen fuera de GitHub mediante `.gitignore` para proteger material artístico original, backups y documentación privada.*
+*Nota: Se excluyen del repositorio remoto los archivos comprimidos de respaldo (`versions/`), los archivos fuente/máster en alta resolución (`research/`) y borradores privados, mientras que las versiones optimizadas para web en `public/` están publicadas para la galería.*
 
 ## Herramientas utilizadas
 - Google AI Studio
