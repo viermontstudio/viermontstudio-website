@@ -1,0 +1,6 @@
+{
+  "name": "Viermont Studio",
+  "description": "Viermont Studio | Javier Montero: Desarrollo de software (DAM, C, Java, SQL, Linux), ciberseguridad defensiva y más de 18 años en aerografía y artes gráficas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

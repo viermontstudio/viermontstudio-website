@@ -1,0 +1,21 @@
+# Viermont Studio - LiteSpeed / Apache Configuration
+# Asegura tipos MIME correctos para evitar errores de ejecución en LiteSpeed/cPanel
+
+<IfModule mod_mime.c>
+  AddType application/javascript .js .mjs .ts
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType application/pdf .pdf
+  AddType font/woff2 .woff2
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  <FilesMatch "\.(js|mjs)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>

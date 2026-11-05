@@ -13,4 +13,5 @@ Thumbs.db
 
 # Compilación y dependencias web (si usas npm)
 node_modules/
-dist/
+dist/docs/_private/
+docs/_private/
