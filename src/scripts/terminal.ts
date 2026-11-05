@@ -45,11 +45,11 @@ Desarrollador en formación (DAM) con trayectoria previa en desarrollo web, dise
 • Curso de Dibujo & Animación Tradicional (152 horas) - Sirimiri Films (2000 - 2001)
 • Técnico en Preimpresión en Artes Gráficas - CEINPRO • Diseño Gráfico, fotografía, tipografía y color (1998 - 2000)
 
-## EXPERIENCIA LABORAL (+18 AÑOS DE TRAYECTORIA CONTINUA)
-• Caddie Máster & Atención Exclusiva | Real Nuevo Club de Golf de San Sebastián Basozabal (2008 - Actualidad / +18 años)
-  - Atención exclusiva a socios y visitantes internacionales, control de juego como starter y marshall, y mantenimiento de instalaciones. Trayectoria continua basada en la excelencia en el trato, resolución autónoma de incidencias, discreción y confianza.
-• Pintor Aerografista, Diseñador Gráfico e Ilustrador Freelance | Viermont Studio (2006 - Actualidad)
-  - Pintura y personalización artística de alta precisión sobre vehículos, cascos, atracciones, lienzos, instrumentos musicales y murales. Diseño de logotipos, ilustraciones y desarrollo web del estudio.
+## EXPERIENCIA LABORAL (TRAYECTORIA CONTINUA AUDITABLE)
+• Caddie Máster & Atención Exclusiva | Real Nuevo Club de Golf de San Sebastián Basozabal (Julio 2008 - Actualidad / 18 años continuos)
+  - Atención exclusiva a socios y visitantes internacionales, control de juego como starter y marshall, y gestión operativa de instalaciones. 18 años continuos basados en la excelencia en el trato, resolución autónoma de incidencias, discreción y confianza.
+• Pintor Aerografista, Diseñador Gráfico e Ilustrador Freelance | Viermont Studio (Junio 2006 - Actualidad / 19+ años)
+  - Pintura y personalización artística de alta precisión sobre vehículos, cascos de competición, atracciones, lienzos, instrumentos musicales y murales en gran formato. Proyectos para clientes y obra artística personal.
 • Diseñador y Programador de Páginas Web | Letralan / Quick Comunicación Multimedia (2004 / 6 meses)
   - Creación de páginas web corporativas para clientes de las empresas con Dreamweaver, HTML, CSS, ASP y Flash.
 • Dibujante e Intercalador de animación | Basabe Animation / Sirimiri Films (2000 - 2004)
@@ -137,8 +137,15 @@ Desarrollador en formación (DAM) con trayectoria previa en desarrollo web, dise
     });
   }
 
+  interface GitHubRepo {
+    name: string;
+    language: string;
+    description: string;
+    html_url: string;
+  }
+
   // Sincronización Automática con la API pública de GitHub
-  let cachedRepos: any[] = [];
+  let cachedRepos: GitHubRepo[] = [];
 
   async function fetchGitHubRepos(): Promise<void> {
     try {
@@ -146,9 +153,14 @@ Desarrollador en formación (DAM) con trayectoria previa en desarrollo web, dise
       if (!res.ok) throw new Error('API Rate limit o error');
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) {
-        cachedRepos = data;
+        cachedRepos = data.map((item: any) => ({
+          name: typeof item.name === 'string' ? item.name : 'Repositorio',
+          language: typeof item.language === 'string' ? item.language : 'Code',
+          description: typeof item.description === 'string' ? item.description : 'Sin descripción',
+          html_url: typeof item.html_url === 'string' && item.html_url.startsWith('https://github.com/') ? item.html_url : 'https://github.com/viermontstudio'
+        }));
         if (githubSyncIndicator) {
-          githubSyncIndicator.textContent = `Sincronizado: 6 repositorios oficiales catalogados (GitHub)`;
+          githubSyncIndicator.textContent = `Sincronizado: ${cachedRepos.length} repositorios oficiales catalogados (GitHub)`;
         }
       }
     } catch (_) {
@@ -440,7 +452,7 @@ Desarrollador en formación (DAM) con trayectoria previa en desarrollo web, dise
         outputBox.innerHTML = `
           <pre class="text-blue-300 font-mono text-xs overflow-x-auto p-2 bg-black/60 rounded border border-white/10">{
   "name": "viermontstudio-website",
-  "version": "2.4.0",
+  "version": "6.0.0",
   "author": "Javier Montero",
   "license": "MIT",
   "type": "module"

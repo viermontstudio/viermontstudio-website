@@ -77,13 +77,22 @@ $asunto = mb_substr($asunto, 0, 150, 'UTF-8');
 $mensaje = strip_tags(trim($data['mensaje'] ?? $data['message'] ?? ''));
 $mensaje = mb_substr($mensaje, 0, 5000, 'UTF-8');
 
+// 2.1. Verificación en servidor de consentimiento expreso RGPD
+$consentimiento = !empty($data['consentimiento_rgpd']) 
+               || !empty($data['rgpd_consent']) 
+               || !empty($_POST['consentimiento_rgpd'])
+               || (!empty($data['consentimiento']) && $data['consentimiento'] === true);
+
 // 3. Validación de campos obligatorios
-if (empty($nombre) || !$email || empty($mensaje)) {
+if (empty($nombre) || !$email || empty($mensaje) || !$consentimiento) {
     if ($isAjax) {
         http_response_code(400);
+        $errMsg = !$consentimiento 
+            ? 'Debes aceptar la Política de Privacidad para continuar.' 
+            : 'Por favor completa todos los campos requeridos con una dirección de correo válida.';
         echo json_encode([
             'success' => false, 
-            'message' => 'Por favor completa todos los campos requeridos con una dirección de correo válida.'
+            'message' => $errMsg
         ]);
     } else {
         header('Location: /#contacto');
@@ -106,12 +115,17 @@ $cuerpoCorreo = "Has recibido un nuevo mensaje desde el formulario oficial de Vi
               . "====================================================\n"
               . "Consentimiento RGPD: Aceptado expresamente por el usuario.\n";
 
+// Cabecera Reply-To segura conforme a RFC 2822
+$safeReplyTo = function_exists('mb_encode_mimeheader') 
+    ? mb_encode_mimeheader($nombre, 'UTF-8', 'B') . ' <' . $email . '>'
+    : '<' . $email . '>';
+
 $headers = [
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8; format=flowed',
     'Content-Transfer-Encoding: 8bit',
     'From: Viermont Studio <web@viermontstudio.com>',
-    'Reply-To: ' . $nombre . ' <' . $email . '>',
+    'Reply-To: ' . $safeReplyTo,
     'X-Mailer: PHP/' . phpversion()
 ];
 

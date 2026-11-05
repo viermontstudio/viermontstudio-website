@@ -1190,11 +1190,11 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
 \u2022 Curso de Dibujo & Animaci\xF3n Tradicional (152 horas) - Sirimiri Films (2000 - 2001)
 \u2022 T\xE9cnico en Preimpresi\xF3n en Artes Gr\xE1ficas - CEINPRO \u2022 Dise\xF1o Gr\xE1fico, fotograf\xEDa, tipograf\xEDa y color (1998 - 2000)
 
-## EXPERIENCIA LABORAL (+18 A\xD1OS DE TRAYECTORIA CONTINUA)
-\u2022 Caddie M\xE1ster & Atenci\xF3n Exclusiva | Real Nuevo Club de Golf de San Sebasti\xE1n Basozabal (2008 - Actualidad / +18 a\xF1os)
-  - Atenci\xF3n exclusiva a socios y visitantes internacionales, control de juego como starter y marshall, y mantenimiento de instalaciones. Trayectoria continua basada en la excelencia en el trato, resoluci\xF3n aut\xF3noma de incidencias, discreci\xF3n y confianza.
-\u2022 Pintor Aerografista, Dise\xF1ador Gr\xE1fico e Ilustrador Freelance | Viermont Studio (2006 - Actualidad)
-  - Pintura y personalizaci\xF3n art\xEDstica de alta precisi\xF3n sobre veh\xEDculos, cascos, atracciones, lienzos, instrumentos musicales y murales. Dise\xF1o de logotipos, ilustraciones y desarrollo web del estudio.
+## EXPERIENCIA LABORAL (TRAYECTORIA CONTINUA AUDITABLE)
+\u2022 Caddie M\xE1ster & Atenci\xF3n Exclusiva | Real Nuevo Club de Golf de San Sebasti\xE1n Basozabal (Julio 2008 - Actualidad / 18 a\xF1os continuos)
+  - Atenci\xF3n exclusiva a socios y visitantes internacionales, control de juego como starter y marshall, y gesti\xF3n operativa de instalaciones. 18 a\xF1os continuos basados en la excelencia en el trato, resoluci\xF3n aut\xF3noma de incidencias, discreci\xF3n y confianza.
+\u2022 Pintor Aerografista, Dise\xF1ador Gr\xE1fico e Ilustrador Freelance | Viermont Studio (Junio 2006 - Actualidad / 19+ a\xF1os)
+  - Pintura y personalizaci\xF3n art\xEDstica de alta precisi\xF3n sobre veh\xEDculos, cascos de competici\xF3n, atracciones, lienzos, instrumentos musicales y murales en gran formato. Proyectos para clientes y obra art\xEDstica personal.
 \u2022 Dise\xF1ador y Programador de P\xE1ginas Web | Letralan / Quick Comunicaci\xF3n Multimedia (2004 / 6 meses)
   - Creaci\xF3n de p\xE1ginas web corporativas para clientes de las empresas con Dreamweaver, HTML, CSS, ASP y Flash.
 \u2022 Dibujante e Intercalador de animaci\xF3n | Basabe Animation / Sirimiri Films (2000 - 2004)
@@ -1277,9 +1277,14 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
       if (!res.ok) throw new Error("API Rate limit o error");
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) {
-        cachedRepos = data;
+        cachedRepos = data.map((item) => ({
+          name: typeof item.name === "string" ? item.name : "Repositorio",
+          language: typeof item.language === "string" ? item.language : "Code",
+          description: typeof item.description === "string" ? item.description : "Sin descripci\xF3n",
+          html_url: typeof item.html_url === "string" && item.html_url.startsWith("https://github.com/") ? item.html_url : "https://github.com/viermontstudio"
+        }));
         if (githubSyncIndicator) {
-          githubSyncIndicator.textContent = `Sincronizado: 6 repositorios oficiales catalogados (GitHub)`;
+          githubSyncIndicator.textContent = `Sincronizado: ${cachedRepos.length} repositorios oficiales catalogados (GitHub)`;
         }
       }
     } catch (_) {
@@ -1556,7 +1561,7 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
         outputBox.innerHTML = `
           <pre class="text-blue-300 font-mono text-xs overflow-x-auto p-2 bg-black/60 rounded border border-white/10">{
   "name": "viermontstudio-website",
-  "version": "2.4.0",
+  "version": "6.0.0",
   "author": "Javier Montero",
   "license": "MIT",
   "type": "module"
@@ -2009,10 +2014,11 @@ function initContact() {
         email: formData.get("email") || "",
         asunto: formData.get("_subject") || "Consulta desde viermontstudio.com",
         mensaje: formData.get("mensaje") || "",
+        consentimiento_rgpd: consentCheckbox ? consentCheckbox.checked : false,
         _honey: formData.get("_honey") || ""
       };
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 7e3);
+      const timeoutId = setTimeout(() => controller.abort(), 15e3);
       try {
         const response = await fetch("./contact.php", {
           method: "POST",
@@ -2038,7 +2044,7 @@ function initContact() {
         }
       } catch (err) {
         clearTimeout(timeoutId);
-        console.warn("Env\xEDo directo a contact.php no completado, usando respaldo mailto:", err);
+        console.warn("Env\xEDo directo a contact.php:", err);
         const mailtoUrl = `mailto:viermontstudio@gmail.com?subject=${encodeURIComponent("[Viermont Studio] " + payload.asunto)}&body=${encodeURIComponent(
           `Nombre: ${payload.nombre}
 Email: ${payload.email}
@@ -2046,10 +2052,10 @@ Email: ${payload.email}
 Mensaje:
 ${payload.mensaje}`
         )}`;
-        showToast("Abriendo tu gestor de correo para enviar a viermontstudio@gmail.com...");
+        showToast("Abriendo tu gestor de correo para enviar a viermontstudio@gmail.com...", true);
         setTimeout(() => {
           window.location.href = mailtoUrl;
-        }, 600);
+        }, 1e3);
       } finally {
         submitBtn.innerHTML = originalBtnHtml;
         submitBtn.disabled = false;

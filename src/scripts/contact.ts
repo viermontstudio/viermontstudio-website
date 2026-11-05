@@ -68,11 +68,12 @@ export function initContact(): void {
         email: (formData.get('email') as string) || '',
         asunto: (formData.get('_subject') as string) || 'Consulta desde viermontstudio.com',
         mensaje: (formData.get('mensaje') as string) || '',
+        consentimiento_rgpd: consentCheckbox ? consentCheckbox.checked : false,
         _honey: (formData.get('_honey') as string) || ''
       };
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 7000);
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 segundos para cPanel Exim
 
       try {
         const response = await fetch('./contact.php', {
@@ -101,17 +102,17 @@ export function initContact(): void {
         }
       } catch (err: any) {
         clearTimeout(timeoutId);
-        console.warn('Envío directo a contact.php no completado, usando respaldo mailto:', err);
+        console.warn('Envío directo a contact.php:', err);
         
         // Respaldo de máxima fiabilidad: Abrir cliente de correo pre-rellenado
         const mailtoUrl = `mailto:viermontstudio@gmail.com?subject=${encodeURIComponent('[Viermont Studio] ' + payload.asunto)}&body=${encodeURIComponent(
           `Nombre: ${payload.nombre}\nEmail: ${payload.email}\n\nMensaje:\n${payload.mensaje}`
         )}`;
         
-        showToast('Abriendo tu gestor de correo para enviar a viermontstudio@gmail.com...');
+        showToast('Abriendo tu gestor de correo para enviar a viermontstudio@gmail.com...', true);
         setTimeout(() => {
           window.location.href = mailtoUrl;
-        }, 600);
+        }, 1000);
       } finally {
         submitBtn.innerHTML = originalBtnHtml;
         submitBtn.disabled = false;

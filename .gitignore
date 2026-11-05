@@ -1,18 +1,44 @@
-# Copias de seguridad y versiones
-versions/
-*.zip
-*.tar.gz
+# ======================================================================
+# ARCHIVO DE EXCLUSIÓN GIT - VIERMONT STUDIO (v6.0)
+# Entorno: Vite + TypeScript + Node | Servidor: LiteSpeed / Apache
+# ======================================================================
 
-# Archivos de investigación / diseño
-research/artwork/
-
-# Sistema y configuración local
-.env
-.DS_Store
-Thumbs.db
-
-# Compilación y dependencias web (si usas npm)
+# 1. Dependencias y Archivos Generados por Compilación
 node_modules/
-dist/docs/_private/
-docs/_private/
+dist/
+dist-ssr/
+*.local
+
+# 2. Archivos de Entorno y Claves Sensibles
+.env
+.env.*
+!.env.example
+
+# 3. Registros de Errores (Logs) y Caché de Herramientas
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vite/
+.eslintcache
+
+# 4. Exclusiones Privadas de Viermont Studio (Backups, Másteres y Docs)
+versions/
 research/
+docs/_private/
+
+# 5. Archivos Temporales de IA y Resguardos (.zip / AI Studio)
+*.zip
+public/assets/aistudio/
+
+# 6. Archivos del Sistema Operativo y Configuraciones de IDE / Editor
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.bak
