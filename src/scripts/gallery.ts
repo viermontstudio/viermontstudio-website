@@ -158,36 +158,79 @@ export function renderArtworks(items: Artwork[], container: HTMLElement): void {
     card.setAttribute('data-art-key', item.id);
     card.setAttribute('data-isolated-bg', item.isolatedBg ? 'true' : 'false');
 
-    card.innerHTML = `
-      <div class="relative rounded-3xl overflow-hidden bg-[#111216] border border-white/10 w-full h-full min-h-[290px] flex flex-col justify-end">
-        <img
-          src="${item.img}"
-          alt="${escapeHtml(item.alt || item.title)}"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 no-download"
-          style="${item.imgStyle || 'object-position: center center;'}"
-          loading="${index < 6 ? 'eager' : 'lazy'}"
-          decoding="async"
-          draggable="false"
-          oncontextmenu="return false;"
-          onerror="window.handleArtworkFallback(this, '${item.id}')"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none"></div>
-        <div class="art-shield" oncontextmenu="return false;" draggable="false"></div>
-        <div class="watermark-subtle absolute top-4 left-4 z-20 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-accentGold"></span>
-          <span class="text-[9px] font-mono tracking-widest text-white uppercase">Viermont Studio &copy;</span>
-        </div>
-        <div class="absolute bottom-6 left-6 right-6 z-20 pointer-events-none">
-          <span class="text-[10px] font-mono uppercase tracking-widest text-accentGold font-semibold block mb-1">${escapeHtml(item.tag || item.category.toUpperCase())}</span>
-          <h3 class="font-headline text-xl text-white font-bold mb-0.5">${escapeHtml(item.title)}</h3>
-          <p class="text-xs text-gray-400 font-light line-clamp-2">${escapeHtml(item.desc)}</p>
-        </div>
-        <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
-          <i class="fa-solid fa-expand text-xs"></i>
-        </div>
-      </div>
-    `;
+    // Contenedor principal de la tarjeta
+    const cardInner = document.createElement('div');
+    cardInner.className = 'relative rounded-3xl overflow-hidden bg-[#111216] border border-white/10 w-full h-full min-h-[290px] flex flex-col justify-end';
 
+    // Imagen creada mediante DOM nativo y saneada
+    const imgEl = document.createElement('img');
+    const safeSrc = item.img.startsWith('/src/assets/images/') || item.img.startsWith('src/assets/images/') || item.img.startsWith('/') ? item.img : '';
+    imgEl.src = safeSrc;
+    imgEl.alt = item.alt || item.title;
+    imgEl.className = 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 no-download';
+    if (item.imgStyle) {
+      imgEl.style.cssText = item.imgStyle;
+    } else {
+      imgEl.style.objectPosition = 'center center';
+    }
+    imgEl.loading = index < 6 ? 'eager' : 'lazy';
+    imgEl.decoding = 'async';
+    imgEl.draggable = false;
+    imgEl.addEventListener('contextmenu', (e) => e.preventDefault());
+    imgEl.addEventListener('error', () => {
+      if (typeof window.handleArtworkFallback === 'function') {
+        window.handleArtworkFallback(imgEl, item.id);
+      }
+    });
+
+    // Capa de degradado
+    const gradientOverlay = document.createElement('div');
+    gradientOverlay.className = 'absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none';
+
+    // Capa escudo anti-descarga
+    const shield = document.createElement('div');
+    shield.className = 'art-shield';
+    shield.draggable = false;
+    shield.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    // Marca de agua
+    const watermark = document.createElement('div');
+    watermark.className = 'watermark-subtle absolute top-4 left-4 z-20 flex items-center gap-1.5';
+    watermark.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-accentGold"></span><span class="text-[9px] font-mono tracking-widest text-white uppercase">Viermont Studio &copy;</span>';
+
+    // Información de la obra (texto seguro con textContent)
+    const textInfo = document.createElement('div');
+    textInfo.className = 'absolute bottom-6 left-6 right-6 z-20 pointer-events-none';
+
+    const tagSpan = document.createElement('span');
+    tagSpan.className = 'text-[10px] font-mono uppercase tracking-widest text-accentGold font-semibold block mb-1';
+    tagSpan.textContent = item.tag || item.category.toUpperCase();
+
+    const titleH3 = document.createElement('h3');
+    titleH3.className = 'font-headline text-xl text-white font-bold mb-0.5';
+    titleH3.textContent = item.title;
+
+    const descP = document.createElement('p');
+    descP.className = 'text-xs text-gray-400 font-light line-clamp-2';
+    descP.textContent = item.desc;
+
+    textInfo.appendChild(tagSpan);
+    textInfo.appendChild(titleH3);
+    textInfo.appendChild(descP);
+
+    // Botón de expandir
+    const expandIcon = document.createElement('div');
+    expandIcon.className = 'absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none';
+    expandIcon.innerHTML = '<i class="fa-solid fa-expand text-xs"></i>';
+
+    cardInner.appendChild(imgEl);
+    cardInner.appendChild(gradientOverlay);
+    cardInner.appendChild(shield);
+    cardInner.appendChild(watermark);
+    cardInner.appendChild(textInfo);
+    cardInner.appendChild(expandIcon);
+
+    card.appendChild(cardInner);
     fragment.appendChild(card);
   });
 

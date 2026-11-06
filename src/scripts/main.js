@@ -904,35 +904,60 @@ function renderArtworks(items, container) {
     card.setAttribute("data-img", item.img);
     card.setAttribute("data-art-key", item.id);
     card.setAttribute("data-isolated-bg", item.isolatedBg ? "true" : "false");
-    card.innerHTML = `
-      <div class="relative rounded-3xl overflow-hidden bg-[#111216] border border-white/10 w-full h-full min-h-[290px] flex flex-col justify-end">
-        <img
-          src="${item.img}"
-          alt="${escapeHtml(item.alt || item.title)}"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 no-download"
-          style="${item.imgStyle || "object-position: center center;"}"
-          loading="${index < 6 ? "eager" : "lazy"}"
-          decoding="async"
-          draggable="false"
-          oncontextmenu="return false;"
-          onerror="window.handleArtworkFallback(this, '${item.id}')"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none"></div>
-        <div class="art-shield" oncontextmenu="return false;" draggable="false"></div>
-        <div class="watermark-subtle absolute top-4 left-4 z-20 flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-accentGold"></span>
-          <span class="text-[9px] font-mono tracking-widest text-white uppercase">Viermont Studio &copy;</span>
-        </div>
-        <div class="absolute bottom-6 left-6 right-6 z-20 pointer-events-none">
-          <span class="text-[10px] font-mono uppercase tracking-widest text-accentGold font-semibold block mb-1">${escapeHtml(item.tag || item.category.toUpperCase())}</span>
-          <h3 class="font-headline text-xl text-white font-bold mb-0.5">${escapeHtml(item.title)}</h3>
-          <p class="text-xs text-gray-400 font-light line-clamp-2">${escapeHtml(item.desc)}</p>
-        </div>
-        <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
-          <i class="fa-solid fa-expand text-xs"></i>
-        </div>
-      </div>
-    `;
+    const cardInner = document.createElement("div");
+    cardInner.className = "relative rounded-3xl overflow-hidden bg-[#111216] border border-white/10 w-full h-full min-h-[290px] flex flex-col justify-end";
+    const imgEl = document.createElement("img");
+    const safeSrc = item.img.startsWith("/src/assets/images/") || item.img.startsWith("src/assets/images/") || item.img.startsWith("/") ? item.img : "";
+    imgEl.src = safeSrc;
+    imgEl.alt = item.alt || item.title;
+    imgEl.className = "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 no-download";
+    if (item.imgStyle) {
+      imgEl.style.cssText = item.imgStyle;
+    } else {
+      imgEl.style.objectPosition = "center center";
+    }
+    imgEl.loading = index < 6 ? "eager" : "lazy";
+    imgEl.decoding = "async";
+    imgEl.draggable = false;
+    imgEl.addEventListener("contextmenu", (e) => e.preventDefault());
+    imgEl.addEventListener("error", () => {
+      if (typeof window.handleArtworkFallback === "function") {
+        window.handleArtworkFallback(imgEl, item.id);
+      }
+    });
+    const gradientOverlay = document.createElement("div");
+    gradientOverlay.className = "absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none";
+    const shield = document.createElement("div");
+    shield.className = "art-shield";
+    shield.draggable = false;
+    shield.addEventListener("contextmenu", (e) => e.preventDefault());
+    const watermark = document.createElement("div");
+    watermark.className = "watermark-subtle absolute top-4 left-4 z-20 flex items-center gap-1.5";
+    watermark.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-accentGold"></span><span class="text-[9px] font-mono tracking-widest text-white uppercase">Viermont Studio &copy;</span>';
+    const textInfo = document.createElement("div");
+    textInfo.className = "absolute bottom-6 left-6 right-6 z-20 pointer-events-none";
+    const tagSpan = document.createElement("span");
+    tagSpan.className = "text-[10px] font-mono uppercase tracking-widest text-accentGold font-semibold block mb-1";
+    tagSpan.textContent = item.tag || item.category.toUpperCase();
+    const titleH3 = document.createElement("h3");
+    titleH3.className = "font-headline text-xl text-white font-bold mb-0.5";
+    titleH3.textContent = item.title;
+    const descP = document.createElement("p");
+    descP.className = "text-xs text-gray-400 font-light line-clamp-2";
+    descP.textContent = item.desc;
+    textInfo.appendChild(tagSpan);
+    textInfo.appendChild(titleH3);
+    textInfo.appendChild(descP);
+    const expandIcon = document.createElement("div");
+    expandIcon.className = "absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none";
+    expandIcon.innerHTML = '<i class="fa-solid fa-expand text-xs"></i>';
+    cardInner.appendChild(imgEl);
+    cardInner.appendChild(gradientOverlay);
+    cardInner.appendChild(shield);
+    cardInner.appendChild(watermark);
+    cardInner.appendChild(textInfo);
+    cardInner.appendChild(expandIcon);
+    card.appendChild(cardInner);
     fragment.appendChild(card);
   });
   container.appendChild(fragment);
@@ -1047,15 +1072,6 @@ function setupLightbox() {
       if (e.key === "ArrowRight") updateLightboxContent(currentArtworkIndex + 1);
     }
   });
-}
-function escapeHtml(str) {
-  return String(str || "").replace(/[&<>"']/g, (s) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[s] || s);
 }
 
 // src/data/exercises.ts
@@ -1297,7 +1313,7 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
   let terminalHistory = [];
   let historyNavIndex = -1;
   let commandDraft = "";
-  function escapeHtml2(str) {
+  function escapeHtml(str) {
     return String(str || "").replace(/[&<>"']/g, (s) => ({
       "&": "&amp;",
       "<": "&lt;",
@@ -1321,7 +1337,7 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
     }
     const cmdLine = document.createElement("div");
     cmdLine.className = "flex items-center gap-2 text-teal-400 font-semibold pt-2";
-    cmdLine.innerHTML = `<span>javiermontero@ViermontStudio:~$</span> <span class="text-white">${escapeHtml2(cmd)}</span>`;
+    cmdLine.innerHTML = `<span>javiermontero@ViermontStudio:~$</span> <span class="text-white">${escapeHtml(cmd)}</span>`;
     terminalScreen.appendChild(cmdLine);
     const outputBox = document.createElement("div");
     outputBox.className = "text-gray-300 pl-4 border-l-2 border-white/10 space-y-1";
@@ -1410,9 +1426,9 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
         let reposListHtml = '<div class="text-teal-300 font-bold">[GitHub API] Repositorios p\xFAblicos en @viermontstudio:</div><div class="space-y-1 mt-2">';
         cachedRepos.forEach((r) => {
           const safeUrl = typeof r.html_url === "string" && r.html_url.startsWith("https://github.com/") ? r.html_url : "https://github.com/viermontstudio";
-          const safeName = escapeHtml2(r.name || "Repositorio");
-          const safeLang = escapeHtml2(r.language || "Code");
-          const safeDesc = escapeHtml2(r.description || "Sin descripci\xF3n");
+          const safeName = escapeHtml(r.name || "Repositorio");
+          const safeLang = escapeHtml(r.language || "Code");
+          const safeDesc = escapeHtml(r.description || "Sin descripci\xF3n");
           reposListHtml += `<div>&bull; <a href="${safeUrl}" target="_blank" class="text-white hover:underline font-semibold" rel="noopener noreferrer">${safeName}</a> <span class="text-teal-400 font-mono text-[11px]">(${safeLang})</span> &mdash; <span class="text-gray-400 text-xs">${safeDesc}</span></div>`;
         });
         reposListHtml += "</div>";
@@ -1473,7 +1489,7 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
     } else if (lower.startsWith("echo ") || lower === "echo") {
       const rawEcho = rawCmd.substring(4).trim();
       const cleanEcho = rawEcho.replace(/^["']|["']$/g, "");
-      outputBox.innerHTML = `<div class="text-gray-200 font-mono">${escapeHtml2(cleanEcho)}</div>`;
+      outputBox.innerHTML = `<div class="text-gray-200 font-mono">${escapeHtml(cleanEcho)}</div>`;
     } else if (lower === "uname" || lower.startsWith("uname ")) {
       outputBox.innerHTML = `<div class="text-gray-300 font-mono">Linux viermont-studio 6.8.0-generic x86_64 GNU/Linux</div>`;
     } else if (lower === "hostname") {
@@ -1504,7 +1520,7 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
         histHtml += '<div class="text-gray-500">Historial vac\xEDo en esta sesi\xF3n.</div>';
       } else {
         terminalHistory.forEach((hCmd, idx) => {
-          histHtml += `<div><span class="text-gray-500 w-8 inline-block">${idx + 1}</span> <span class="text-teal-300">${escapeHtml2(hCmd)}</span></div>`;
+          histHtml += `<div><span class="text-gray-500 w-8 inline-block">${idx + 1}</span> <span class="text-teal-300">${escapeHtml(hCmd)}</span></div>`;
         });
       }
       histHtml += "</div>";
@@ -1528,7 +1544,7 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
         </div>`;
     } else if (lower.startsWith("cd ") || lower === "cd") {
       const targetDir = lower.replace(/^cd\s*/, "").trim() || "~";
-      outputBox.innerHTML = `<div class="text-teal-300 font-mono text-xs">cd: directorio actual fijado a /home/javier/viermontstudio/${escapeHtml2(targetDir === "~" ? "" : targetDir)} (entorno interactivo seguro)</div>`;
+      outputBox.innerHTML = `<div class="text-teal-300 font-mono text-xs">cd: directorio actual fijado a /home/javier/viermontstudio/${escapeHtml(targetDir === "~" ? "" : targetDir)} (entorno interactivo seguro)</div>`;
     } else if (lower === "exit" || lower === "quit" || lower === "logout") {
       outputBox.innerHTML = `<div class="text-teal-300 font-mono text-xs">logout: Sesi\xF3n de terminal preservada. Cambiando a vista README.md...</div>`;
       setTimeout(() => switchTerminalView("readme"), 700);
@@ -1561,7 +1577,7 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
         outputBox.innerHTML = `
           <pre class="text-blue-300 font-mono text-xs overflow-x-auto p-2 bg-black/60 rounded border border-white/10">{
   "name": "viermontstudio-website",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "author": "Javier Montero",
   "license": "MIT",
   "type": "module"
@@ -1586,12 +1602,12 @@ Desarrollador en formaci\xF3n (DAM) con trayectoria previa en desarrollo web, di
           </div>`;
       } else {
         outputBox.innerHTML = `
-          <div class="text-rose-400 font-mono text-xs">cat: ${escapeHtml2(targetFile)}: No existe el archivo o el directorio</div>
+          <div class="text-rose-400 font-mono text-xs">cat: ${escapeHtml(targetFile)}: No existe el archivo o el directorio</div>
           <div class="text-gray-500 font-mono text-[11px]">Escribe <span class="text-teal-300 font-bold">ls -la</span> para ver los archivos disponibles.</div>`;
       }
     } else {
       outputBox.innerHTML = `
-        <div class="text-rose-400">bash: comando no encontrado: '${escapeHtml2(cmd)}'</div>
+        <div class="text-rose-400">bash: comando no encontrado: '${escapeHtml(cmd)}'</div>
         <div class="text-gray-400">Escribe <span class="text-teal-300 font-bold">help</span> para consultar los comandos v\xE1lidos o pulsa en los botones superiores.</div>`;
     }
     terminalScreen.appendChild(outputBox);

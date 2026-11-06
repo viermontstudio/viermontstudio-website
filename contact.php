@@ -1,7 +1,7 @@
 <?php
 /**
  * Viermont Studio - Procesador de Formulario de Contacto Seguro
- * Ejecución nativa en cPanel / LiteSpeed (Ginernet)
+ * Procesamiento nativo y directo en servidor web
  * Envío directo a viermontstudio@gmail.com sin intermediarios ni caídas de terceros
  */
 

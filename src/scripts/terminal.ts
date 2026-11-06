@@ -452,7 +452,7 @@ Desarrollador en formación (DAM) con trayectoria previa en desarrollo web, dise
         outputBox.innerHTML = `
           <pre class="text-blue-300 font-mono text-xs overflow-x-auto p-2 bg-black/60 rounded border border-white/10">{
   "name": "viermontstudio-website",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "author": "Javier Montero",
   "license": "MIT",
   "type": "module"
