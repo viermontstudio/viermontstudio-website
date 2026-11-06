@@ -51,7 +51,7 @@ function generateAtsComplete() {
   Y += 23;
   doc.font(fontSansBold).fontSize(10).fillColor(C.textMain).text('DESARROLLADOR DE SOFTWARE (DAM) & ARTISTA VISUAL', innerLeft, Y, { align: 'center', width: innerWidth });
   Y += 16;
-  doc.font(fontSansBold).fontSize(8.5).fillColor(C.textDark).text('Teléfono: (+34) 635 72 64 64   |   Email: viermontstudio@gmail.com   |   Ubicación: 20870 Elgoibar (Gipuzkoa), País Vasco', innerLeft, Y, { align: 'center', width: innerWidth });
+  doc.font(fontSansBold).fontSize(8.5).fillColor(C.textDark).text('Email: viermontstudio@gmail.com   |   Ubicación: 20870 Elgoibar (Gipuzkoa), País Vasco', innerLeft, Y, { align: 'center', width: innerWidth });
   Y += 12;
   doc.font(fontSans).fontSize(8).fillColor(C.textMuted).text('Web: https://viermontstudio.com   |   LinkedIn: linkedin.com/in/viermontstudio   |   GitHub: github.com/viermontstudio', innerLeft, Y, { align: 'center', width: innerWidth });
   Y += 15;
@@ -132,7 +132,7 @@ function generateAtsComplete() {
 
   // Mini Header Pág 2
   doc.font(fontSansBold).fontSize(8.5).fillColor(C.textDark).text('JAVIER MONTERO', innerLeft, Y2, { lineBreak: false });
-  doc.font(fontSans).fontSize(8).fillColor(C.textMuted).text(' — Currículum Vitae   |   Tel: (+34) 635 72 64 64   |   Email: viermontstudio@gmail.com', innerLeft + 85, Y2, { lineBreak: false });
+  doc.font(fontSans).fontSize(8).fillColor(C.textMuted).text(' — Currículum Vitae   |   Email: viermontstudio@gmail.com', innerLeft + 85, Y2, { lineBreak: false });
   doc.font(fontSansBold).fontSize(8).fillColor(C.textDark).text('Página 2 de 2', innerLeft + innerWidth - 80, Y2, { width: 80, align: 'right' });
   Y2 += 12;
   doc.moveTo(innerLeft, Y2).lineTo(innerLeft + innerWidth, Y2).strokeColor(C.lineDark).lineWidth(1).stroke();

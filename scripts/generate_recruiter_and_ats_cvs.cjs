@@ -207,15 +207,11 @@ async function generateTerminalCVWithPhone() {
   const contactY1 = Y + 58;
   const iconS = 9.5;
 
-  // Fila 1: Ubicación + Teléfono + Email
+  // Fila 1: Ubicación + Email
   drawPinIcon(idX, contactY1 + 1, iconS, C.teal);
   doc.font(fontMono).fontSize(7.4).fillColor(C.textMain).text(' Elgoibar (Gipuzkoa)', idX + iconS + 3, contactY1, { lineBreak: false });
 
-  const phoneX = idX + 130;
-  drawPhoneIcon(phoneX, contactY1 + 1, iconS, C.gold);
-  doc.font(fontMonoBold).fontSize(7.4).fillColor(C.gold).text(' (+34) 635 72 64 64', phoneX + iconS + 3, contactY1, { lineBreak: false });
-
-  const emailX = idX + 265;
+  const emailX = idX + 160;
   drawMailIcon(emailX, contactY1 + 1, iconS, C.teal);
   doc.font(fontMono).fontSize(7.4).fillColor(C.textMain).text(' viermontstudio@gmail.com', emailX + iconS + 3, contactY1, { lineBreak: false });
 

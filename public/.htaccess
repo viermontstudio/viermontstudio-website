@@ -15,9 +15,10 @@
   </IfModule>
 </FilesMatch>
 
-# Proteger directorios ocultos (como .git) excepto .well-known (para SSL Let's Encrypt)
+# Bloquear acceso a carpetas internas de scripts y documentación
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteRule "^(scripts|docs)(/|$)" - [F,L]
   RewriteRule "(^|/)\.(?!well-known)" - [F]
 </IfModule>
 
@@ -36,7 +37,7 @@ Options -Indexes
 </IfModule>
 
 # ----------------------------------------------------------------------
-# 3. CABECERAS DE SEGURIDAD (Security Headers - Calificación A+)
+# 3. CABECERAS DE SEGURIDAD (Security Headers)
 # ----------------------------------------------------------------------
 <IfModule mod_headers.c>
   # Prevenir MIME-sniffing
@@ -48,8 +49,8 @@ Options -Indexes
   # Enviar origen sólo a destinos HTTPS equivalentes
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
-  # HSTS: Forzar HTTPS durante 1 año
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # HSTS: Forzar HTTPS en el dominio principal (seguro para subdominios sin certificado propio)
+  Header always set Strict-Transport-Security "max-age=31536000"
 
   # Restringir permisos de APIs del navegador innecesarias
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"

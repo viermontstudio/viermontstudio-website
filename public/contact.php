@@ -78,10 +78,8 @@ $mensaje = strip_tags(trim($data['mensaje'] ?? $data['message'] ?? ''));
 $mensaje = mb_substr($mensaje, 0, 5000, 'UTF-8');
 
 // 2.1. Verificación en servidor de consentimiento expreso RGPD
-$consentimiento = !empty($data['consentimiento_rgpd']) 
-               || !empty($data['rgpd_consent']) 
-               || !empty($_POST['consentimiento_rgpd'])
-               || (!empty($data['consentimiento']) && $data['consentimiento'] === true);
+$rawConsent = $data['consentimiento_rgpd'] ?? $data['rgpd_consent'] ?? $_POST['consentimiento_rgpd'] ?? $data['consentimiento'] ?? null;
+$consentimiento = ($rawConsent === true || $rawConsent === '1' || $rawConsent === 1 || $rawConsent === 'true' || $rawConsent === 'on');
 
 // 3. Validación de campos obligatorios
 if (empty($nombre) || !$email || empty($mensaje) || !$consentimiento) {
