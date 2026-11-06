@@ -1,101 +1,115 @@
-# V6 · Consolidación, Auditoría y Producción
+# 🎨 Viermont Studio — Web Oficial & Portfolio
 
-## Propósito
+`Version: v6.0.1` | `TypeScript` | `Vite` | `PHP 8.x` | `SecOps: Hardened` | `License: MIT`  
 
-Auditar, asegurar y optimizar la plataforma para su lanzamiento definitivo como web estática de alto rendimiento, cerrando la brecha entre el diseño conceptual y los estándares profesionales de seguridad, privacidad y arquitectura.
-
----
-
-## Concepto
-
-Si V5 definió *quién soy y qué ofrezco*, V6 se centra en *cómo está construido y con qué rigor técnico se entrega*.
-
-Tras someter el proyecto a una auditoría técnica integral (SecOps, rendimiento web, accesibilidad y cumplimiento normativo), esta fase elimina cualquier residuo de desarrollo y convierte la web en una aplicación de producción 100% estática, auditable y segura.
-
-Se consolida además un compromiso absoluto con la **honestidad técnica**: definir con precisión quirúrgica el rol de dirección, diseño y auditoría frente a la ejecución asistida por Inteligencia Artificial, sin atribuirse competencias no contrastadas.
+**Arte y Código** — Plataforma web oficial y portfolio interactivo de **Javier Montero Martínez**.  
+🌐 **Web Oficial:** https://viermontstudio.com  
 
 ---
 
-## Conceptos clave
-
-- Auditoría técnica & SecOps
-- Seguridad defensiva (Cero RCE)
-- Privacidad por diseño (RGPD / LOPDGDD)
-- Arquitectura TypeScript nativa
-- Rendimiento web (Core Web Vitals)
-- Honestidad y transparencia profesional
+#### 📌 Descripción del Proyecto
+Plataforma web diseñada para integrar dos trayectorias profesionales complementarias:
+1. **Desarrollo de Software y Ciberseguridad Defensiva:** Ciclo DAM (Jobie FP), lenguajes C, Java, SQL, administración Linux/Bash y acreditaciones en TryHackMe (*Pre Security* y *Cybersecurity 101*).
+2. **Artes Gráficas y Personalización Artística:** Trayectoria continua de más de 19 años en aerografía de alta precisión, diseño gráfico y delineación técnica en Viermont Studio, junto a 18 años en atención al cliente y gestión operativa de campo en el Real Nuevo Club de Golf Basozabal.
 
 ---
 
-## Principales incorporaciones e hitos técnicos
+#### 🛠️ Metodología & Autoría: AI-Driven Architecture
 
-### 1. Seguridad y eliminación de residuos (Hardening)
-- **Erradicación de paneles residuales:** Eliminación definitiva de código administrativo en cliente (`curator.ts`), atajos ocultos y comandos simulados de la terminal.
-- **Superficie de ataque cero:** Eliminación de middlewares de subida de archivos en servidor. La plataforma es 100% de solo lectura en cliente, inmune a inyecciones de comandos o RCE.
+> *"El arte y la creatividad son propios; la IA es el motor de ejecución tecnológica. La dirección, el diseño y la responsabilidad final del proyecto son 100% humanas."*
 
-### 2. Privacidad y protección de datos
-- **Alineación RGPD estricta:** Procesador propio en servidor (`contact.php`) con verificación obligatoria de casilla de consentimiento informado en backend antes del envío, sin cesión ni intermediarios externos.
-- **Protección de datos personales:** Purgado exhaustivo de metadatos públicos de búsqueda (Schema.org) y desvinculación de información privada de los directorios públicos.
+El código fuente de esta plataforma (TypeScript, HTML, CSS, PHP) ha sido desarrollado y optimizado mediante herramientas de **Inteligencia Artificial**. El autor no ha escrito manualmente cada línea de código, sino que actúa como **director de proyecto, arquitecto de software, prompt engineer y auditor de seguridad (SecOps)**, asumiendo la responsabilidad técnica y el criterio de diseño final.
 
-### 3. Arquitectura y compilación limpia
-- **Unificación modular con Vite:** Sustitución de scripts estáticos duplicados por compilación nativa en TypeScript (`main.ts`).
-- **Limpieza de dependencias:** Eliminación de esqueletos no utilizados de plantillas anteriores, logrando un bundle JavaScript ultra ligero (~86 KB).
-
-### 4. Rendimiento web y SEO técnico
-- **Optimización de imágenes:** Compresión estricta a formato WebP de alta densidad, reduciendo archivos pesados hasta en un 93% sin pérdida visual.
-- **Indexación canónica:** Limpieza de `sitemap.xml` (eliminación de anclas no indexables) y corrección de manifiesto PWA con iconos oficiales en todas las densidades.
+##### 📋 Roles de Ingeniería
+* 👨‍💻 **Javier Montero — Tech Lead & Security Director (Líder Técnico y Director de Seguridad):** Arquitectura de software, diseño UI/UX, auditoría SecOps y decisiones finales.
+* ⚡ **Google AI Studio — Core Developer / Engine (Desarrollador Principal / Motor):** Generación y refactorización del código TypeScript y backend PHP.
+* 📚 **Gemini Notebook — Knowledge Manager & Technical Writer (Gestor de Conocimiento y Redactor Técnico):** Consolidación de documentación técnica, memorias y requisitos.
+* 🛡️ **ChatGPT & Claude — QA & Security Code Reviewers (Revisores de Código y Ciberseguridad):** Análisis estático de código, auditoría de vulnerabilidades y verificación SecOps.
+* ⌨️ **GitHub Copilot — Inline Pair Programmer (Programador en Pareja Integrado):** Asistencia en tiempo real y optimización de sintaxis en el IDE.
 
 ---
 
-## Frase representativa
-
-> "La creatividad define la dirección. La tecnología amplía las posibilidades. El rigor convierte las ideas en proyectos reales."
-
----
-
-## Aprendizajes
-
-- Un buen diseño visual no compensa una arquitectura descuidada: la seguridad y la limpieza del código son tan importantes como la interfaz.
-- La inteligencia artificial es un acelerador de ejecución extraordinario, pero requiere una dirección técnica humana implacable para auditar, detectar vulnerabilidades y exigir calidad.
-- La transparencia sobre las herramientas y el rol real genera mucha más credibilidad ante reclutadores y empresas que pretender dominar tecnologías que no se han programado manualmente.
+#### 🛡️ Ciberseguridad Defensiva & SecOps (4 Pilares)
+1. **Superficie de Ataque Cero:** Cliente 100% estático y de solo lectura; erradicación de paneles de administración remotos y middlewares de subida de archivos (inmune a RCE e inyecciones).
+2. **Formulario Seguro (`contact.php`):** Validación estricta en servidor con protección *Honeypot* anti-bot, limitador de frecuencia por IP (*Rate-Limiting*) y prevención de inyección de cabeceras en correo (CRLF).
+3. **Hardening HTTP (`.htaccess`):** Implementación de cabeceras de seguridad estrictas (`HSTS`, `X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, `CSP`) y bloqueo de acceso HTTP a archivos internos de infraestructura (`package.json`, `.env*`, `.git/`, etc.).
+4. **Privacidad por Diseño (RGPD):** Procesamiento nativo en servidor propio sin intermediarios ni cesión de datos a plataformas de terceros, con casilla de consentimiento obligatorio verificada en backend.
 
 ---
 
-## Resultado final
-
-Viermont Studio alcanza su versión definitiva: una plataforma representativa, rápida, accesible y blindada, que demuestra simultáneamente madurez profesional previa, solvencia técnica actual y capacidad real de dirección de proyectos tecnológicos.
-
+#### 🛠️ Arquitectura y Stack Tecnológico
+* **Frontend:** HTML5 semántico accesible, Tailwind CSS y Vanilla TypeScript modular.
+* **Empaquetado & Compilación:** Vite y esbuild para la generación de un bundle ECMAScript modular (`src/scripts/main.ts`) ultraligero (~86 KB) optimizado para navegadores modernos.
+* **Galería Interactiva Bento:** Catálogo público compuesto por 61 obras organizadas en retícula modular con compresión estricta a formato WebP (reducción de peso visual del 93%).
+* **Terminal Bash Emulada:** Entorno de consola interactivo en cliente (navegador) con historial de comandos, ayuda contextual, visualizador de currículum en Markdown y sincronización en tiempo real con la API pública de GitHub (`@viermontstudio`).
 
 ---
 
-## 🛠️ Metodología de Ingeniería: AI-Driven Architecture
+#### 📂 Estructura del Repositorio
+```text
+├── index.html              # Punto de entrada principal con pre-renderizado estático
+├── contact.php             # Procesador nativo del formulario de contacto con validación RGPD
+├── .htaccess               # Reglas de endurecimiento, cabeceras SecOps y caché para LiteSpeed/Apache
+├── .gitignore              # Reglas de exclusión para dependencias y carpetas privadas/máster
+├── package.json            # Configuración de dependencias y scripts de construcción
+├── tsconfig.json           # Configuración del compilador TypeScript
+├── vite.config.ts          # Configuración de Vite y plugin Tailwind CSS
+├── public/                 # Archivos estáticos directos (favicons, manifest, imágenes WebP, CV PDF)
+├── docs/                   # Documentación técnica, auditorías y memorias evolutivas (V1 a V6)
+├── versions/               # (Local / Excluido en .gitignore) Paquetes .zip de respaldo de versiones anteriores
+└── research/               # (Local / Excluido en .gitignore) Archivos máster en alta resolución y material de trabajo
+```
 
-<details open>
-<summary>🇪🇸 <b>Español</b></summary>
+*Nota: Se excluyen del repositorio remoto los archivos de respaldo local (`versions/`), los archivos fuente/máster en alta resolución (`research/`) y la documentación interna, manteniendo en `public/` la versión optimizada de las obras en formato WebP para la galería pública.*
 
-<br>
+---
 
-La plataforma ha sido desarrollada mediante un flujo de trabajo ágil bajo dirección humana, estructurado en los siguientes roles de ingeniería:
+#### 🚀 Instalación y Desarrollo Local
+##### Requisitos previos
+* Node.js (versión 18 o superior)
+* npm (versión 9 o superior)
 
-* 👨‍💻 **Javier Montero (Tech Lead & Security Director):** Arquitectura de software, diseño UI/UX, auditoría SecOps y toma de decisiones finales.
-* ⚡ **Google AI Studio (Core Developer / Engine):** Motor principal de generación y refactorización de código TypeScript y backend PHP.
-* 📚 **Gemini Notebook (Knowledge Manager & Technical Writer):** Consolidación de documentación técnica, gestión de memorias y estructuración de requisitos.
-* 🛡️ **ChatGPT & Claude (QA & Security Code Reviewers):** Análisis estático de código, revisión cruzada de vulnerabilidades y verificación de estándares.
-* ⌨️ **GitHub Copilot (Inline Pair Programmer):** Asistencia en tiempo real y optimización de sintaxis en el IDE.
+##### Pasos
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/viermontstudio/viermontstudio-website.git
+   cd viermontstudio-website
+   ```
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
+3. **Iniciar el servidor de desarrollo local:**
+   ```bash
+   npm run dev
+   ```
+   Abre http://localhost:3000 en tu navegador.
+4. **Validación de tipos y linting:**
+   ```bash
+   npm run lint
+   ```
+5. **Compilar proyecto:**
+   ```bash
+   npm run build
+   ```
+   Los archivos optimizados se generarán en la carpeta `dist/`.
 
-</details>
+---
 
-<details>
-<summary>🇬🇧 <b>English</b></summary>
+#### 🔒 Despliegue en Servidor (cPanel / LiteSpeed / Apache)
+1. Copiar los archivos estáticos generados en `dist/` al directorio `public_html/`.
+2. Asegurarse de que el archivo `.htaccess` esté presente en `public_html/` para activar las reglas de seguridad y bloqueo de archivos internos.
+3. El archivo `contact.php` procesará automáticamente los mensajes de contacto tras verificar el consentimiento RGPD en servidor.
 
-<br>
+---
 
-The platform was built using an agile workflow under human direction, structured into the following engineering roles:
+#### 👤 Autor
+**Javier Montero Martínez**
+* Viermont Studio: https://viermontstudio.com
+* GitHub: @viermontstudio
+* Email: viermontstudio@gmail.com
 
-* 👨‍💻 **Javier Montero (Tech Lead & Security Director):** Software architecture, UI/UX design, SecOps auditing, and final decision-making.
-* ⚡ **Google AI Studio (Core Developer / Engine):** Primary code generation and refactoring engine for TypeScript and PHP backend.
-* 📚 **Gemini Notebook (Knowledge Manager & Technical Writer):** Technical documentation consolidation, memory management, and requirements structuring.
-* 🛡️ **ChatGPT & Claude (QA & Security Code Reviewers):** Static code analysis, cross-vulnerability auditing, and standards compliance.
-* ⌨️ **GitHub Copilot (Inline Pair Programmer):** Real-time inline assistance and syntax optimization within the IDE.
+---
 
-</details>
+#### 📄 Licencia
+Código fuente bajo licencia MIT. Las obras artísticas, fotografías, logotipos y diseños contenidos en este repositorio son propiedad intelectual exclusiva de Javier Montero Martínez (Viermont Studio).
