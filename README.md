@@ -30,9 +30,9 @@ El código fuente de esta plataforma (TypeScript, HTML, CSS, PHP) ha sido desarr
 ---
 
 #### 🛡️ Ciberseguridad Defensiva & SecOps (4 Pilares)
-1. **Superficie de Ataque Cero:** Cliente 100% estático y de solo lectura; erradicación de paneles de administración remotos y middlewares de subida de archivos (inmune a RCE e inyecciones).
-2. **Formulario Seguro (`contact.php`):** Validación estricta en servidor con protección *Honeypot* anti-bot, limitador de frecuencia por IP (*Rate-Limiting*) y prevención de inyección de cabeceras en correo (CRLF).
-3. **Hardening HTTP (`.htaccess`):** Implementación de cabeceras de seguridad estrictas (`HSTS`, `X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, `CSP`) y bloqueo de acceso HTTP a archivos internos de infraestructura (`package.json`, `.env*`, `.git/`, etc.).
+1. **Superficie de Ataque Reducida:** Arquitectura frontend estática de solo lectura, sin panel de administración remoto ni middlewares de subida de archivos en cliente. El procesamiento de contacto se limita a un endpoint PHP autónomo con validación en servidor.
+2. **Formulario Seguro (`contact.php`):** Validación estricta en backend con protección *Honeypot* anti-bot, limitador de frecuencia por IP (*Rate-Limiting*) y prevención de inyección de cabeceras en correo (CRLF).
+3. **Hardening HTTP (`.htaccess`):** Implementación de cabeceras de seguridad (`HSTS`, `X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, `CSP` en modo observación/Report-Only) y bloqueo de acceso HTTP a archivos internos de desarrollo e infraestructura (`package.json`, `.env*`, `.git/`, etc.).
 4. **Privacidad por Diseño (RGPD):** Procesamiento nativo en servidor propio sin intermediarios ni cesión de datos a plataformas de terceros, con casilla de consentimiento obligatorio verificada en backend.
 
 ---
@@ -66,7 +66,7 @@ El código fuente de esta plataforma (TypeScript, HTML, CSS, PHP) ha sido desarr
 
 #### 🚀 Instalación y Desarrollo Local
 ##### Requisitos previos
-* Node.js (versión 18 o superior)
+* Node.js (versión 20.19+ o 22.12+)
 * npm (versión 9 o superior)
 
 ##### Pasos
