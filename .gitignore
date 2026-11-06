@@ -8,6 +8,8 @@ node_modules/
 dist/
 dist-ssr/
 *.local
+bun.lock
+bun.lockb
 
 # 2. Archivos de Entorno y Claves Sensibles
 .env
@@ -22,16 +24,20 @@ yarn-error.log*
 .vite/
 .eslintcache
 
-# 4. Exclusiones Privadas de Viermont Studio (Backups, Másteres y Docs)
+# 4. Exclusiones Privadas de Viermont Studio (Backups, Másteres, Docs y Vídeos)
 versions/
 research/
 docs/_private/
-
-# 5. Archivos Temporales de IA y Resguardos (.zip / AI Studio)
+videos/
+media/drafts/
+*.mp4
+*.webm
+*.mov
 *.zip
-public/assets/aistudio/
+*.tar.gz
+*.rar
 
-# 6. Archivos del Sistema Operativo y Configuraciones de IDE / Editor
+# 5. Archivos del Sistema Operativo y Configuraciones de IDE / Editor
 .DS_Store
 .DS_Store?
 Thumbs.db
